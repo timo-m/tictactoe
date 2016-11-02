@@ -48,5 +48,46 @@ public class BoardTest {
         System.out.println("Winner in column 1: " + board.winnerInColumn(0));
         System.out.println("Winner in column 2: " + board.winnerInColumn(1));
         System.out.println("Winner in column 3: " + board.winnerInColumn(2));
+
+        System.out.println();
+        board = new Board();
+        board.setCharAtIndex('X', 0, 0);
+        board.print();
+        System.out.println("Winner in diag1: " + board.winnerInDiag1());
+        System.out.println("Winner in diag2: " + board.winnerInDiag2());
+
+        System.out.println();
+        board = new Board();
+        board.setCharAtIndex('X', 0, 0);
+        board.setCharAtIndex('X', 1, 1);
+        board.setCharAtIndex('X', 2, 2);
+        board.print();
+        System.out.println("Winner in diag1: " + board.winnerInDiag1());
+        System.out.println("Winner in diag2: " + board.winnerInDiag2());
+
+        System.out.println();
+        board = new Board();
+        board.setCharAtIndex('X', 0, 2);
+        board.setCharAtIndex('X', 1, 1);
+        board.setCharAtIndex('X', 2, 0);
+        board.print();
+        System.out.println("Winner in diag1: " + board.winnerInDiag1());
+        System.out.println("Winner in diag2: " + board.winnerInDiag2());
+
+        System.out.println();
+        board = new Board();
+        board.setCharAtIndex('X', 0, 0);
+        board.setCharAtIndex('X', 2, 2);
+        board.print();
+        System.out.println("Winner in diag1: " + board.winnerInDiag1());
+        System.out.println("Winner in diag2: " + board.winnerInDiag2());
+
+        System.out.println();
+        board = new Board();
+        board.setCharAtIndex('X', 0, 2);
+        board.setCharAtIndex('X', 2, 0);
+        board.print();
+        System.out.println("Winner in diag1: " + board.winnerInDiag1());
+        System.out.println("Winner in diag2: " + board.winnerInDiag2());
     }
 }

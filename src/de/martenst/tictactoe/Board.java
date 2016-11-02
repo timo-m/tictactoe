@@ -12,7 +12,7 @@ public final class Board {
     }
 
     public boolean setCharAtIndex(final char c, final int row, final int column) {
-        if (this.cellAtIndexIsEmpty(row, column)) {
+        if (this.cellAtIndexIsEmpty(row, column) && !this.hasAWinner()) {
             board[row][column] = c;
             return true;
         }
@@ -45,7 +45,7 @@ public final class Board {
                 || winnerInDiag1() || winnerInDiag2();
     }
 
-    public boolean settingIsAllowed() {
+    public boolean makeAMoveIsAllowed() {
         return !this.allCellsAreSet() && !this.hasAWinner();
     }
 
@@ -61,11 +61,17 @@ public final class Board {
                 && getCellAtIndex(1, column) == getCellAtIndex(2, column);
     }
 
-    private boolean winnerInDiag1() {
-        return getCellAtIndex(0, 0) == getCellAtIndex(1, 1) && getCellAtIndex(1, 1) == getCellAtIndex(2, 2);
+    boolean winnerInDiag1() {
+        return !cellAtIndexIsEmpty(0, 0)
+                && getCellAtIndex(0, 0) == getCellAtIndex(1, 1)
+                && getCellAtIndex(1, 1) == getCellAtIndex(2, 2)
+                && !cellAtIndexIsEmpty(2, 2);
     }
 
-    private boolean winnerInDiag2() {
-        return getCellAtIndex(0, 2) == getCellAtIndex(1, 1) && getCellAtIndex(1, 1) == getCellAtIndex(2, 0);
+    boolean winnerInDiag2() {
+        return !cellAtIndexIsEmpty(0, 2)
+                && getCellAtIndex(0, 2) == getCellAtIndex(1, 1)
+                && getCellAtIndex(1, 1) == getCellAtIndex(2, 0)
+                && !cellAtIndexIsEmpty(2, 0);
     }
 }

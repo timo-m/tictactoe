@@ -31,13 +31,13 @@ public class Game {
             togglePlayer();
             getPlayerInput();
             board.print();
-        } while (this.board.settingIsAllowed());
+        } while (this.board.makeAMoveIsAllowed());
     }
 
 
     private void printWinner() {
         if (board.hasAWinner()) {
-            System.out.println("Congratulations '" + currentPlayer.name + "'! You won the game");
+            System.out.println("Congratulations '" + currentPlayer.name + "'! You won the game.");
         } else {
             System.out.println("The game is a draw. No winners this time.");
         }
@@ -53,16 +53,17 @@ public class Game {
     private void getPlayerInput() {
         int row = -1;
         int column = -1;
-        System.out.println(String.format("%s, make your move.", currentPlayer.name));
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            System.out.print("Enter row   : ");
-            row = Integer.parseInt(br.readLine());
-            System.out.print("Enter column: ");
-            column = Integer.parseInt(br.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        board.setCharAtIndex(currentPlayer.symbol, row, column);
+        do {
+            System.out.println(String.format("%s, make your move.", currentPlayer.name));
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            try {
+                System.out.print("Enter row   : ");
+                row = Integer.parseInt(br.readLine());
+                System.out.print("Enter column: ");
+                column = Integer.parseInt(br.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } while (!board.setCharAtIndex(currentPlayer.symbol, row, column));
     }
 }
