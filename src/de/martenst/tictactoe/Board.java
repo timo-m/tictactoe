@@ -4,35 +4,6 @@ public final class Board {
     private static final String ROW = "%s|%s|%s";
     private final char[][] board = new char[3][3];
 
-    public static void main(String[] args) {
-        Board board = new Board();
-        board.print();
-
-        System.out.println();
-        board.setCharAtIndex('X', 0, 0);
-        board.setCharAtIndex('O', 2, 2);
-        board.print();
-
-        System.out.println();
-        System.out.println("Empty cell at [0|0]: " + board.cellAtIndexIsEmpty(0, 0));
-        System.out.println("Empty cell at [0|1]: " + board.cellAtIndexIsEmpty(0, 1));
-
-        System.out.println();
-        System.out.println("Row 1 is set: " + board.rowIsSet(0));
-        board.setCharAtIndex('X', 0, 1);
-        board.setCharAtIndex('X', 0, 2);
-        board.print();
-        System.out.println("Row 1 is set: " + board.rowIsSet(0));
-
-        System.out.println();
-        board.setCharAtIndex('-', 1, 0);
-        board.setCharAtIndex('-', 1, 1);
-        board.setCharAtIndex('-', 1, 2);
-        board.setCharAtIndex('-', 2, 0);
-        board.setCharAtIndex('-', 2, 1);
-        board.print();
-        System.out.println("All cells are set: " + board.allCellsAreSet());
-    }
 
     public void print() {
         for (int row = 0, maxCol = 2; row <= maxCol; row++) {
@@ -48,19 +19,53 @@ public final class Board {
         return false;
     }
 
+    boolean cellAtIndexIsEmpty(final int row, final int column) {
+        return Character.UNASSIGNED == this.getCellAtIndex(row, column);
+    }
+
     private char getCellAtIndex(final int row, final int column) {
         return board[row][column];
     }
 
-    private boolean cellAtIndexIsEmpty(final int row, final int column) {
-        return Character.UNASSIGNED == this.getCellAtIndex(row, column);
-    }
-
-    private boolean allCellsAreSet() {
+    public boolean allCellsAreSet() {
         return rowIsSet(0) && rowIsSet(1) && rowIsSet(2);
     }
 
-    private boolean rowIsSet(final int row) {
+    boolean rowIsSet(final int row) {
         return !cellAtIndexIsEmpty(row, 0) && !cellAtIndexIsEmpty(row, 1) && !cellAtIndexIsEmpty(row, 2);
+    }
+
+    private boolean columnIsSet(final int column) {
+        return !cellAtIndexIsEmpty(0, column) && !cellAtIndexIsEmpty(1, column) && !cellAtIndexIsEmpty(2, column);
+    }
+
+    public boolean hasAWinner() {
+        return winnerInRow(0) || winnerInRow(1) || winnerInRow(2)
+                || winnerInColumn(0) || winnerInColumn(1) || winnerInColumn(2)
+                || winnerInDiag1() || winnerInDiag2();
+    }
+
+    public boolean settingIsAllowed() {
+        return !this.allCellsAreSet() && !this.hasAWinner();
+    }
+
+    boolean winnerInRow(int row) {
+        return rowIsSet(row)
+                && getCellAtIndex(row, 0) == getCellAtIndex(row, 1)
+                && getCellAtIndex(row, 1) == getCellAtIndex(row, 2);
+    }
+
+    boolean winnerInColumn(int column) {
+        return columnIsSet(column)
+                && getCellAtIndex(0, column) == getCellAtIndex(1, column)
+                && getCellAtIndex(1, column) == getCellAtIndex(2, column);
+    }
+
+    private boolean winnerInDiag1() {
+        return getCellAtIndex(0, 0) == getCellAtIndex(1, 1) && getCellAtIndex(1, 1) == getCellAtIndex(2, 2);
+    }
+
+    private boolean winnerInDiag2() {
+        return getCellAtIndex(0, 2) == getCellAtIndex(1, 1) && getCellAtIndex(1, 1) == getCellAtIndex(2, 0);
     }
 }
