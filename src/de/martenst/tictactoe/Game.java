@@ -28,9 +28,9 @@ public class Game {
 
     private void play() {
         do {
+            board.print();
             togglePlayer();
             getPlayerInput();
-            board.print();
         } while (this.board.makeAMoveIsAllowed());
     }
 
@@ -61,8 +61,8 @@ public class Game {
                 row = Integer.parseInt(br.readLine());
                 System.out.print("Enter column: ");
                 column = Integer.parseInt(br.readLine());
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException | NumberFormatException e) {
+                System.out.println("!! The value you entered was not a number !!");
             }
         } while (!board.setCharAtIndex(currentPlayer.symbol, row, column));
     }

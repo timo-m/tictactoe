@@ -6,12 +6,16 @@ public final class Board {
 
 
     public void print() {
+        System.out.println("");
         for (int row = 0, maxCol = 2; row <= maxCol; row++) {
             System.out.println(String.format(ROW, board[row][0], board[row][1], board[row][2]));
         }
     }
 
     public boolean setCharAtIndex(final char c, final int row, final int column) {
+        if (row < 0 || row > 2 || column < 0 || column > 2) {
+            return false;
+        }
         if (this.cellAtIndexIsEmpty(row, column) && !this.hasAWinner()) {
             board[row][column] = c;
             return true;
